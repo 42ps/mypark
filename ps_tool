@@ -4,6 +4,13 @@ LANGUAGE_EXT=cpp
 
 function new_problem() {
 	DIR_NAME=$1
+
+	if [ -z $DIR_NAME ]
+	then
+		echo "Please enter your new problem name."
+		return
+	fi
+
 	set -e
 	mkdir $DIR_NAME
 	sed "s/problem_name/$DIR_NAME/" ./$SOLVING_PROCEDURE > ./$DIR_NAME/$SOLVING_PROCEDURE
@@ -17,7 +24,7 @@ Usage: ./ps_tool COMMAND
 
 COMMAND			Description
 help			show this message
-new problem_name	create a new problem solving necessaries.
+new problem_name	create new problem solving necessaries.
 
 HELP
 }
