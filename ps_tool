@@ -10,10 +10,8 @@ function new_problem() {
 	touch ./$DIR_NAME/solution.$LANGUAGE_EXT
 }
 
-
-case $1 in
-	help)
-	cat <<HELP
+function help_message() {
+cat <<HELP
 Usage: ./ps_tool COMMAND
 
 COMMAND			Description
@@ -21,12 +19,15 @@ help			show this message
 new problem_name	create a new problem solving necessaries.
 
 HELP
-	;;
+}
+
+
+case $1 in
 	new)
 	shift 1
 	new_problem $@
 	;;
 	*)
-	echo "'$1' command is not supported"
+	help_message
 	;;
 esac
