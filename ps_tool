@@ -4,14 +4,15 @@ LANGUAGE_EXT=cpp
 
 function new_problem() {
 	DIR_NAME=$1
-
-	mkdir -p $DIR_NAME
+	set -e
+	mkdir $DIR_NAME
 	sed "s/problem_name/$DIR_NAME/" ./$SOLVING_PROCEDURE > ./$DIR_NAME/$SOLVING_PROCEDURE
 	touch ./$DIR_NAME/solution.$LANGUAGE_EXT
+	set +e
 }
 
 function help_message() {
-cat <<HELP
+	cat <<HELP
 Usage: ./ps_tool COMMAND
 
 COMMAND			Description
