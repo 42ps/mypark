@@ -1,6 +1,6 @@
 #!/bin/bash
 SOLVING_PROCEDURE=풀이과정.md
-LANGUAGE_EXT=cpp
+LANGUAGE_EXT=(cpp rs)
 
 function new_problem() {
 	DIR_NAME=$1
@@ -11,10 +11,22 @@ function new_problem() {
 		return
 	fi
 
+	if [ $DIR_NAME = 'test' ]
+	then
+		echo "The name cannot be used as a problem name."
+		return
+	fi
+
 	set -e
 	mkdir $DIR_NAME
+	mkdir $DIR_NAME/{input,output}
 	sed "s/problem_name/$DIR_NAME/" ./$SOLVING_PROCEDURE > ./$DIR_NAME/$SOLVING_PROCEDURE
-	touch ./$DIR_NAME/solution.$LANGUAGE_EXT
+
+	for ext in ${LANGUAGE_EXT[@]}
+	do
+		touch ./$DIR_NAME/solution.$ext
+	done
+
 	set +e
 }
 

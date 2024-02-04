@@ -1,5 +1,5 @@
 ### 문제 소개
-[problem_name](link to problem)
+[problem_name](link_to_problem)
 
 ### 입/출력 분석
 - 모든 입/출력 경우의 수를 나열하시오.
