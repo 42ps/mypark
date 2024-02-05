@@ -22,11 +22,11 @@ function new_problem() {
 	mkdir $DIR_NAME/{input,output}
 	sed "s/problem_name/$DIR_NAME/" ./$SOLVING_PROCEDURE > ./$DIR_NAME/$SOLVING_PROCEDURE
 
-	for ext in ${LANGUAGE_EXT[@]}
-	do
-		touch ./$DIR_NAME/solution.$ext
-	done
 
+	touch ./$DIR_NAME/solution.$LANGUAGE_EXT
+	cargo new ./$DIR_NAME/solution --vcs none
+
+	
 	set +e
 }
 
