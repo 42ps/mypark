@@ -25,6 +25,7 @@ function new_problem() {
 
 	touch ./$DIR_NAME/solution.$LANGUAGE_EXT
 	cargo new ./$DIR_NAME/rust --vcs none
+	cp rustfmt.toml ./$DIR_NAME/rust/
 
 	
 	set +e
