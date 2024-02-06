@@ -1,0 +1,8 @@
+[package]
+name = "가장_긴_증가하는_부분_수열5"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]

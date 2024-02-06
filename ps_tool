@@ -18,14 +18,12 @@ function new_problem() {
 	fi
 
 	set -e
-	mkdir $DIR_NAME
+	cargo new $DIR_NAME
 	mkdir $DIR_NAME/{input,output}
 	sed "s/problem_name/$DIR_NAME/" ./$SOLVING_PROCEDURE > ./$DIR_NAME/$SOLVING_PROCEDURE
 
-
-	touch ./$DIR_NAME/solution.$LANGUAGE_EXT
-	cargo new ./$DIR_NAME/rust --vcs none
-	cp rustfmt.toml ./$DIR_NAME/rust/
+	touch ./$DIR_NAME/src/solution.$LANGUAGE_EXT
+	cp rustfmt.toml ./$DIR_NAME/
 
 	
 	set +e
