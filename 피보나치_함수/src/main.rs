@@ -1,4 +1,4 @@
-use std::fmt::Write;
+use std::fmt::{Display, Write};
 use std::{io::Read, ops::Add};
 
 /// input
@@ -42,6 +42,12 @@ impl Add for Counts {
 	}
 }
 
+impl Display for Counts {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} {}", self.0, self.1)
+	}
+}
+
 fn main() {
 	let input = input().expect("Input");
 	let max = *input.iter().max().expect("Non-empty input");
@@ -56,7 +62,7 @@ fn main() {
 
 	let mut output = String::new();
 	for i in input {
-		let _ = writeln!(output, "{} {}", dp[i].0, dp[i].1);
+		let _ = writeln!(output, "{}", dp[i]);
 	}
 
 	print!("{output}");
