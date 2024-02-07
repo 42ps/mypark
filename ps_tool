@@ -1,5 +1,6 @@
 #!/bin/bash
 SOLVING_PROCEDURE=풀이과정.md
+SOLVING_REVIEW=풀이회고.md
 LANGUAGE_EXT=(cpp rs)
 
 function new_problem() {
@@ -21,6 +22,7 @@ function new_problem() {
 	cargo new $DIR_NAME
 	mkdir $DIR_NAME/{input,output}
 	sed "s/problem_name/$DIR_NAME/" ./$SOLVING_PROCEDURE > ./$DIR_NAME/$SOLVING_PROCEDURE
+	cp ./$SOLVING_REVIEW ./$DIR_NAME/
 
 	touch ./$DIR_NAME/src/solution.$LANGUAGE_EXT
 	cp rustfmt.toml ./$DIR_NAME/
