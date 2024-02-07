@@ -19,7 +19,7 @@ use std::io::Read;
 fn main() {
 	let mut points = input().expect("coordinates");
 
-	points.sort();
+	points.sort_unstable();
 
 	let mut output = String::new();
 
@@ -35,12 +35,14 @@ fn input() -> Result<Vec<(isize, isize)>, Box<dyn std::error::Error>> {
 
 	std::io::stdin().read_to_string(&mut buf)?;
 
-	let mut iter = buf.split_ascii_whitespace().skip(1);
+	let mut iter = buf
+		.split_ascii_whitespace()
+		.skip(1)
+		.flat_map(|x| x.parse::<isize>());
+
 	let mut v = Vec::new();
 
-	while let [Some(x), Some(y)] =
-		[(); 2].map(|_| iter.next().and_then(|x| x.parse::<isize>().ok()))
-	{
+	while let [Some(x), Some(y)] = [(); 2].map(|_| iter.next()) {
 		v.push((x, y))
 	}
 
