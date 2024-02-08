@@ -2,6 +2,11 @@
 	"files.associations": {
 		"complex": "cpp",
 		"map": "cpp",
-		"utility": "cpp"
+		"utility": "cpp",
+		"queue": "cpp",
+		"__node_handle": "cpp",
+		"__tree": "cpp",
+		"algorithm": "cpp",
+		"set": "cpp"
 	}
 }

@@ -4,8 +4,11 @@ SOLVING_REVIEW=풀이회고.md
 LANGUAGE_EXT=(cpp rs)
 
 function contains() {
-	local array=$1
-	local element=$2
+	local element=$1
+
+	shift 1;
+
+	local array=$@
 
 	for item in ${array[@]}
 	do
@@ -43,12 +46,11 @@ function new_problem() {
 
 	set -e
 
-	if contains "${LANGUAGE_EXT[@]}" "rs"
+	if contains "rs" "${LANGUAGE_EXT[@]}"
 	then
 		cargo new $DIR_NAME --vcs none
 		cp rustfmt.toml ./$DIR_NAME/
-		make_sources ./$DIR_NAME/src/
-		
+		make_sources ./$DIR_NAME/src/		
 	else
 		mkdir -p $DIR_NAME/src/
 		make_sources ./$DIR_NAME/src/
