@@ -1,0 +1,6 @@
+[package]
+name = "이항_계수"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
