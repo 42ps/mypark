@@ -49,9 +49,9 @@ fn input() -> Result<(usize, usize, usize), Box<dyn std::error::Error>> {
 	std::io::stdin().read_to_string(&mut buf)?;
 
 	let mut iter = buf.split_ascii_whitespace();
+	let m = 1_000_000_007;
 
-	if let (Some(n), Some(r), Some(m)) = (
-		iter.next().and_then(|x| x.parse::<usize>().ok()),
+	if let (Some(n), Some(r)) = (
 		iter.next().and_then(|x| x.parse::<usize>().ok()),
 		iter.next().and_then(|x| x.parse::<usize>().ok()),
 	) {
