@@ -1,13 +1,5 @@
 use std::io::Read;
 
-fn gcd(a: isize, b: isize) -> isize {
-	if b % a == 0 {
-		return a;
-	}
-
-	gcd(b % a, a)
-}
-
 fn check_zero(a: isize, b: isize, c: isize) -> Option<String> {
 	if a != 0 && b != 0 && c != 0 {
 		return None;
@@ -27,6 +19,21 @@ fn check_zero(a: isize, b: isize, c: isize) -> Option<String> {
 	Some("Not Exist".to_string())
 }
 
+fn egcd(a: isize, b: isize) -> (isize, isize, isize) {
+	let (mut old_r, mut r) = (a, b);
+	let (mut old_x, mut x) = (1, 0);
+	let (mut old_y, mut y) = (0, 1);
+
+	while r != 0 {
+		let q = old_r / r;
+		(old_r, r) = (r, old_r % r);
+		(old_x, x) = (x, old_x - x * q);
+		(old_y, y) = (y, old_y - y * q);
+	}
+
+	(old_r, old_x, old_y)
+}
+
 fn main() {
 	let (a, b, c) = input().expect("INPUT");
 
@@ -35,42 +42,16 @@ fn main() {
 		return;
 	}
 
-	let d = gcd(
-		std::cmp::min(a.abs(), b.abs()),
-		std::cmp::max(a.abs(), b.abs()),
-	);
+	let (gcd, x, y) = egcd(a, b);
 
-	if c % d != 0 {
+	if c % gcd != 0 {
 		print!("Not Exist");
 		return;
 	}
 
-	let ap = a.abs() / d;
-	let bp = b.abs() / d;
-	let cp = c / d;
-
-	let mut x = 0;
-	let mut y = 0;
-
-	loop {
-		if (ap * x + 1) % bp == 0 {
-			y = (ap * x + 1) / bp;
-			x *= -1;
-			break;
-		}
-
-		if (ap * x - 1) % bp == 0 {
-			y = (ap * x - 1) / bp;
-			y *= -1;
-			break;
-		}
-		x += 1;
-	}
-
-	x *= cp;
-	y *= cp;
-	x = if a.is_negative() { -x } else { x };
-	y = if b.is_negative() { -y } else { y };
+	let q = c / gcd;
+	let x = x * q;
+	let y = y * q;
 
 	print!("{x} {y}");
 }

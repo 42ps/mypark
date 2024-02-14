@@ -4,16 +4,6 @@ using namespace std;
 
 typedef long int i64;
 
-i64 gcd(i64 a, i64 b) {
-	// a < b
-	// a != 0
-	if (b % a == 0) {
-		return a;
-	}
-
-	return gcd(b % a, a);
-}
-
 int is_zero(i64 a, i64 b, i64 c) {
 	if (a != 0 && b != 0 && c != 0) {
 		return 0;
@@ -32,6 +22,42 @@ int is_zero(i64 a, i64 b, i64 c) {
 	return 1;
 }
 
+i64 egcd(i64 a, i64 b, i64 *rx, i64 *ry) {
+    i64 old_r = a;
+    i64 r = b;
+
+    // old_r = a * old_x + b * old_y
+    // r = a * x + b * y
+
+    i64 old_x = 1;
+    i64 x = 0;
+
+    i64 old_y = 0;
+    i64 y = 1;
+
+    while (r != 0) {
+        i64 tr,tx,ty,q;
+
+        q = old_r / r;
+
+        tr = r;
+        r = old_r % r;
+        old_r = tr;
+
+        tx = x;
+        x = old_x - x * q;
+        old_x = tx;
+
+        ty = y;
+        y = old_y - y * q;
+        old_y = ty;
+    }
+
+    *rx = old_x;
+    *ry = old_y;
+    return old_r;
+}
+
 int main() {
 	i64 a, b, c;
 	cin >> a >> b >> c;
@@ -40,45 +66,16 @@ int main() {
 		return 0;
 	}
 
-	i64 d = gcd(min(abs(a), abs(b)), max(abs(a), abs(b)));
+    i64 x,y;
+	i64 d = egcd(a, b, &x, &y);
 
 	if (c % d != 0) {
 		cout << "Not Exist";
 		return 0;
 	}
 
-	i64 ap = abs(a) / d;
-	i64 bp = abs(b) / d;
-	i64 cp = c / d;
-
-	i64 x = 0;
-	i64 y = 0;
-
-	while (true) {
-		if ((ap * x + 1) % bp == 0) {
-			y = (ap * x + 1) / bp;
-			x *= -1;
-			break;
-		}
-
-		if ((ap * x - 1) % bp == 0) {
-			y = (ap * x - 1) / bp;
-			y *= -1;
-			break;
-		}
-		x++;
-	}
-
-	x *= cp;
-	y *= cp;
-
-	if (a < 0) {
-		x *= -1;
-	}
-
-	if (b < 0) {
-		y *= -1;
-	}
+    x *= c / d;
+    y *= c / d;
 
 	cout << x << " " << y;
 
