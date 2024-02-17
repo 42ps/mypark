@@ -1,6 +1,6 @@
 #!/bin/bash
-SOLVING_PROCEDURE=풀이과정.md
-SOLVING_REVIEW=풀이회고.md
+SOLVING_PROCEDURE=solution_process.md
+SOLVING_REVIEW=solution_review.md
 LANGUAGE_EXT=(cpp rs)
 
 function contains() {
