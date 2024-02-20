@@ -1,50 +1,45 @@
-use std::{collections::HashSet, io::Read};
+use std::cmp;
+use std::io::Read;
 
 fn main() {
 	let (target, btns) = input().expect("input");
-
 	let mut min = target.abs_diff(100);
 
-	for btn in btns.iter() {
-		goto_channel(&btns, *btn, 1, target, &mut min);
+	if let Some(n) = press_number(&btns, (0..target).rev()) {
+		min = cmp::min(min, n.to_string().len() + target - n);
 	}
-
+	if let Some(n) = press_number(&btns, target..=1_000_000) {
+		min = cmp::min(min, n.to_string().len() + n - target);
+	}
 	print!("{min}")
 }
 
-fn goto_channel(btns: &Vec<usize>, ch: usize, count: usize, target: usize, min: &mut usize) {
-	if count > 6 {
-		return;
-	}
-
-	*min = std::cmp::min(target.abs_diff(ch) + count, *min);
-
-	if ch == 0 {
-		return;
-	}
-
-	for btn in btns {
-		goto_channel(btns, ch * 10 + btn, count + 1, target, min);
-	}
+fn press_number(btns: &Vec<bool>, rng: impl Iterator<Item = usize>) -> Option<usize> {
+	rng.filter(|x| is_possible(&btns, *x)).next()
 }
 
-fn input() -> Result<(usize, Vec<usize>), Box<dyn std::error::Error>> {
-	let mut buf = String::new();
+fn is_possible(btns: &Vec<bool>, mut x: usize) -> bool {
+	while x > 9 {
+		if !btns[x % 10] {
+			return false;
+		}
+		x /= 10;
+	}
+	btns[x]
+}
 
+fn input() -> Result<(usize, Vec<bool>), Box<dyn std::error::Error>> {
+	let mut buf = String::new();
 	std::io::stdin().read_to_string(&mut buf)?;
 
-	let mut iter = buf
-		.split_ascii_whitespace()
-		.flat_map(|x| x.parse::<usize>());
+	let mut iter = buf.split_ascii_whitespace().flat_map(|x| x.parse::<_>());
 
 	let (Some(target), Some(_)) = (iter.next(), iter.next()) else {
 		Err(Box::new(std::fmt::Error))?
 	};
 
-	let disabled = iter.collect::<HashSet<usize>>();
-	let btns = (0..10)
-		.filter(|x| !disabled.contains(x))
-		.collect::<Vec<usize>>();
+	let mut btns = vec![true; 10];
+	iter.for_each(|x| btns[x] = false);
 
 	Ok((target, btns))
 }
