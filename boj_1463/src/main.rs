@@ -5,29 +5,34 @@ fn main() {
 
 	if n <= 2 {
 		print!("{}", n - 1);
-		return;
+	} else {
+		let mut memo = vec![0; n + 1];
+
+		memo[2] = 1;
+		memo[3] = 1;
+		print!("{}", solve(n, &mut memo));
+	}
+}
+
+fn solve(n: usize, memo: &mut Vec<usize>) -> usize {
+	if memo[n] != 0 {
+		return memo[n];
 	}
 
-	let p3 = n.ilog(3);
-	let p2 = n.ilog2();
-	let mut min = usize::MAX;
+	let mut m = usize::MAX;
 
-	for i3 in 0..=p3 {
-		let x3 = 3_usize.pow(i3);
-		for i2 in 0..=p2 {
-			let x2 = 2_usize.pow(i2);
-			let x = (x2 * x3) as usize;
-
-			if x > n {
-				break;
-			}
-
-			let candidate = (n - x) + (i2 + i3) as usize;
-			min = std::cmp::min(min, candidate);
-		}
+	if n % 3 == 0 {
+		m = m.min(solve(n / 3, memo));
 	}
 
-	print!("{min}");
+	if n % 2 == 0 {
+		m = m.min(solve(n / 2, memo));
+	}
+
+	m = m.min(solve(n - 1, memo));
+
+	memo[n] = m + 1;
+	memo[n]
 }
 
 fn input() -> Result<usize, Box<dyn std::error::Error>> {
