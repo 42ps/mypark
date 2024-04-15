@@ -56,10 +56,11 @@ function new_problem() {
 		make_sources ./$DIR_NAME/src/
 	fi
 
-	mkdir $DIR_NAME/{input,output}
+	mkdir $DIR_NAME/{input,output,target}
 	sed "s/problem_name/$DIR_NAME/" ./$SOLVING_PROCEDURE > ./$DIR_NAME/$SOLVING_PROCEDURE
 	cp ./$SOLVING_REVIEW ./$DIR_NAME/
 	cp "./test.sh" ./$DIR_NAME/
+	sed "s/NAME=/NAME=$DIR_NAME/" ./tmpl.mk > ./$DIR_NAME/Makefile
 
 	set +e
 }

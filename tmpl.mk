@@ -1,0 +1,2 @@
+NAME=
+-include ../rules.mk
