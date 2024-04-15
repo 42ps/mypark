@@ -4,7 +4,7 @@
 TARGET=target/$(NAME)
 
 $(TARGET): src/*.cpp
-	c++ -o $@ $^
+	c++ -std=c++17 -o $@ $^
 
 .PHONY: test pwd
 test: $(TARGET)
