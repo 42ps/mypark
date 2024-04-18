@@ -3,8 +3,8 @@
 
 TARGET=target/$(NAME)
 
-$(TARGET): src/*.cpp
-	c++ -std=c++17 -o $@ $^
+$(TARGET): src/main.cpp
+	c++ $(CXXFLAGS) -std=c++17 -o $@ $^
 
 .PHONY: test pwd
 test: $(TARGET)
