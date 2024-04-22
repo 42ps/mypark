@@ -1,11 +1,13 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 int main(void) {
-    int a, b;
-    cin >> a >> b;
+    vector<int> a(2, 0), b(2, 1);
+    auto x = [](const vector<int>& a, const vector<int>& b) -> bool {
+        return a[1] < b[1];
+    };
 
-    cout << a * b << '\n';
-    return 0;
+    cout << x(a, b) << '\n';
 }
