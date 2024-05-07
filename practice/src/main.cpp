@@ -1,13 +1,24 @@
 #include <iostream>
-#include <vector>
+#include <type_traits>
 
 using namespace std;
 
-int main(void) {
-    vector<int> a(2, 0), b(2, 1);
-    auto x = [](const vector<int>& a, const vector<int>& b) -> bool {
-        return a[1] < b[1];
-    };
+template <typename T, typename std::enable_if<std::is_integral<T>::value,
+                                              T>::type* = nullptr>
+void func(T a) {
+    cout << a << endl;
+};
 
-    cout << x(a, b) << '\n';
+int main() {
+    // bool i = std::is_integral<int>::value;
+    // bool f = std::is_integral<float>::value;
+    // std::cout << i << std::endl;
+    // std::cout << f << std::endl;
+
+    double a = 1.1;
+    func(a);
+
+    // int a = 1;
+    // func(1);
+    return 0;
 }
